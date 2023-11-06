@@ -59,7 +59,18 @@ const Gallery: React.FC = () => {
       </div>
       <div className='grid gap-14 grid-cols-1 md:grid-cols-2'>
         <DragDropContext onDragEnd={onDragEnd}>
-          <div
+        <Droppable droppableId="droppable">
+    {(provided) => (
+      <div ref={provided.innerRef} {...provided.droppableProps}>
+        {/* Your other elements */}
+        <Draggable draggableId="unique-draggable-id" index={0}>
+          {(provided) => (
+            <div
+              ref={provided.innerRef}
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}
+            >
+              <div
             className={`clickable-container ${imageSelection[0] ? 'selected' : ''}`}
             onClick={() => handleImageSelection(0)}
           >
@@ -78,6 +89,14 @@ const Gallery: React.FC = () => {
               alt=""
             />
           </div>
+            </div>
+          )}
+        </Draggable>
+        {/* Additional draggable elements */}
+      </div>
+    )}
+  </Droppable>
+          
           <Droppable droppableId="image-gallery">
             {(provided) => (
               <div className='grid gap-14 grid-cols-2' ref={provided.innerRef} {...provided.droppableProps}>
